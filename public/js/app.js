@@ -7,6 +7,8 @@ socket.on('connect', function(){
 socket.on('message', function(message){ //Lê a messagem emitida pelo servidor
 	console.log('New message:');
 	console.log(message.text);
+
+	jQuery('.messages').append('<p>' + message.text + '</p>'); //usamos . para buscar pelo NAME
 });
 
 //Handles submitting of new message
