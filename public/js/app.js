@@ -1,4 +1,8 @@
+var name = getQueryVariable('name') || 'Anonymous'; //Vem do arquivo QueryParams.js
+var room = getQueryVariable('room'); //Vem do arquivo QueryParams.js
 var socket = io();
+
+console.log(name + ' wants to join ' + room);
 
 socket.on('connect', function(){
 	console.log('Connected to socket.io server!');
@@ -6,12 +10,14 @@ socket.on('connect', function(){
 
 socket.on('message', function(message){ //Lê a messagem emitida pelo servidor
 	var timestampMoment = moment.utc(message.timestamp);
+	var $message = jQuery('#messages');
 
 	console.log('New message:');
 	console.log(message.text);
 
-	//usamos . para buscar pelo NAME
-	jQuery('.messages').append('<p><strong>' + timestampMoment.local().format('h:mm a') + '</strong>' + ' - ' + message.text + '</p>'); 
+	$message.append('<p><strong>' + message.name + ' ' + timestampMoment.local().format('h:mm a') + '</strong></p>');
+	$message.append('<p>' + message.text + '</p>'); 
+	$message.append('<br />');
 });
 
 //Handles submitting of new message
@@ -22,6 +28,7 @@ $form.on('submit', function(event){
 
 	var $message = $form.find('input[name=message]');
 	socket.emit('message', {
+		name: name,
 		text: $message.val()
 	});
 
