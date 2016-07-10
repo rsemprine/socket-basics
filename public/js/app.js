@@ -17,7 +17,7 @@ socket.on('message', function(message){ //Lê a messagem emitida pelo servidor
 
 	$message.append('<p><strong>' + message.name + ' ' + timestampMoment.local().format('h:mm a') + '</strong></p>');
 	$message.append('<p>' + message.text + '</p>'); 
-	$message.append('<br />');
+	//$message.append('<br />');
 });
 
 //Handles submitting of new message
