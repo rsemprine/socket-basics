@@ -5,10 +5,13 @@ socket.on('connect', function(){
 });
 
 socket.on('message', function(message){ //Lê a messagem emitida pelo servidor
+	var timestampMoment = moment.utc(message.timestamp);
+
 	console.log('New message:');
 	console.log(message.text);
 
-	jQuery('.messages').append('<p>' + message.text + '</p>'); //usamos . para buscar pelo NAME
+	//usamos . para buscar pelo NAME
+	jQuery('.messages').append('<p><strong>' + timestampMoment.local().format('h:mm a') + '</strong>' + ' - ' + message.text + '</p>'); 
 });
 
 //Handles submitting of new message
